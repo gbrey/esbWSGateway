@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<jbossesb parameterReloadSecs="5"
+ xmlns="http://anonsvn.labs.jboss.com/labs/jbossesb/trunk/product/etc/schemas/xml/jbossesb-1.2.0.xsd"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://anonsvn.labs.jboss.com/labs/jbossesb/trunk/product/etc/schemas/xml/jbossesb-1.2.0.xsd http://anonsvn.jboss.org/repos/labs/labs/jbossesb/trunk/product/etc/schemas/xml/jbossesb-1.2.0.xsd">
+ <providers>
+  <jbr-provider name="WSGateway" protocol="http">
+   <jbr-bus busid="WSGateway" port="7777"/>
+  </jbr-provider>
+ </providers>
+ <services>
+  <service category="WSGatewayService"
+   description="Servicio que recibe todos los pedidos http"
+   invmScope="GLOBAL" name="WSGatewayService">
+   <listeners>
+    <jbr-listener busidref="WSGateway" is-gateway="true" name="WSGatewayListener"/>
+   </listeners>
+   <actions mep="RequestResponse">
+    <action class="org.jboss.soa.esb.actions.routing.http.HttpRouter" name="HttpRouter">
+     <property name="method" value="POST"/>
+     <property name="endpointUrl" value="http://localhost:8080/DecirHola/DecirHola"/>
+    </action>
+   </actions>
+  </service>
+ </services>
+</jbossesb>
